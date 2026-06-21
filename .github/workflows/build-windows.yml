@@ -8,7 +8,7 @@ on:
 
 jobs:
   build-windows:
-    runs-on: windows-latest
+    runs-on: windows-2019
 
     steps:
       - name: 拉取代码
@@ -17,7 +17,7 @@ jobs:
       - name: 安装Flutter SDK
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.24.0'
+          flutter-version: '3.22.3'
           channel: 'stable'
 
       - name: 启用Windows桌面支持
@@ -28,12 +28,6 @@ jobs:
 
       - name: 安装依赖
         run: flutter pub get
-
-      - name: 修复CMakeLists.txt使用VS 2022
-        run: |
-          (Get-Content windows\CMakeLists.txt) -replace 'Visual Studio 16 2019', 'Visual Studio 17 2022' | Set-Content windows\CMakeLists.txt
-          Get-Content windows\CMakeLists.txt | Select-Object -First 5
-        shell: pwsh
 
       - name: 编译Windows Release
         run: flutter build windows --release
