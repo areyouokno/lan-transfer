@@ -24,7 +24,7 @@ jobs:
         run: flutter config --enable-windows-desktop
 
       - name: 生成Windows平台目录
-        run: flutter create --platforms=windows .
+        run: flutter create --platforms=windows --project-name=lan_transfer .
 
       - name: 安装依赖
         run: flutter pub get
