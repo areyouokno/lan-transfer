@@ -23,6 +23,9 @@ jobs:
       - name: 启用Windows桌面支持
         run: flutter config --enable-windows-desktop
 
+      - name: 生成Windows平台目录
+        run: flutter create --platforms=windows .
+
       - name: 安装依赖
         run: flutter pub get
 
