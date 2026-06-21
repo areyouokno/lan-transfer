@@ -8,7 +8,7 @@ on:
 
 jobs:
   build-windows:
-    runs-on: windows-2019
+    runs-on: windows-latest
 
     steps:
       - name: 拉取代码
@@ -17,7 +17,7 @@ jobs:
       - name: 安装Flutter SDK
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.22.3'
+          flutter-version: '3.24.0'
           channel: 'stable'
 
       - name: 启用Windows桌面支持
