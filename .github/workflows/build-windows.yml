@@ -1,0 +1,42 @@
+name: Build Windows EXE
+
+# 触发条件：推送到main分支时自动跑，或者在Actions页面手动点"Run workflow"
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch: {}
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+
+    steps:
+      - name: 拉取代码
+        uses: actions/checkout@v4
+
+      - name: 安装Flutter SDK
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.0'
+          channel: 'stable'
+
+      - name: 启用Windows桌面支持
+        run: flutter config --enable-windows-desktop
+
+      - name: 安装依赖
+        run: flutter pub get
+
+      - name: 编译Windows Release
+        run: flutter build windows --release
+
+      - name: 打包编译产物
+        run: |
+          mkdir dist
+          xcopy /E /I build\windows\x64\runner\Release dist\lan_transfer
+
+      - name: 上传Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: lan_transfer_windows
+          path: dist/lan_transfer
+          retention-days: 14
